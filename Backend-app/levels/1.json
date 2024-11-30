@@ -1,0 +1,18 @@
+[
+  {
+    "id": "block-0",
+    "x": 19,
+    "y": 139,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-1",
+    "x": 52,
+    "y": 184,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  }
+]
