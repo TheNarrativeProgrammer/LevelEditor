@@ -21,7 +21,7 @@ $(function () {
         });
         
         block.click(function (event) {
-            event.stopPropogation();                        //                              propogation - stop propograption - if we click on block, nothing else happens
+            //event.stopPropogation();                        //                              propogation - stop propograption - if we click on block, nothing else happens
         }); 
         
         block.contextmenu(function (event) {                //RIGHT CLICK TO DELETE         contextMenu -> means right click                right click to delete block
