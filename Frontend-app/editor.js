@@ -68,7 +68,7 @@ $(function () {
                     const xPos = parsedData[i]["x"];
                     const yPos = parsedData[i]["y"];
                     const className = parsedData[i]["type"];
-                    LoadBlocks(Id, className, xPos, yPos, levelSelected);
+                    RenderBlocks(Id, className, xPos, yPos, levelSelected);
                 }
 
             }
@@ -77,19 +77,17 @@ $(function () {
 
     function ClearEditor() {
         const $editor = $("#editor")
-        $editor.empty();
+        $editor.children().remove();
     }
 
-    function LoadBlocks(Id, className, xPos, yPos, levelSelected) {
+    function RenderBlocks(Id, className, xPos, yPos, levelSelected) {
                                              //NOTE: this isn't single quotes, its the double tilda key, but not the tilda
         //selector mode -> start with # or . and ID or element type. SEARCHES FOR that element$("#add-block") or <(".div")
         //create mode -> beginning (<div) and end of element(/div>). Creates that element $("<div></div>")
         const block = $("<div></div>")                      //CREATE NEW BLOCK                 $("<div></div>") creates new div element                 
             .addClass("block")                              //                                  define attributes
             .attr("id", Id)
-            .attr("x", xPos)
-            .attr("y", yPos)
-            .css({ top: "10px", left: "10px" })
+            .css({ top: yPos, left : xPos })
             .appendTo("#editor");                           //select element & append           select #editor and append new block to editor
 
         block.draggable({                                   //MAKE BLOCK DRAGGABLE          grab block that we just created and make it dragg-able
