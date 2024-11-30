@@ -1,8 +1,6 @@
 
-
 $(function () {
     let blockCounter = 0;
-   
                                     //ADD BLOCK                                                 when element 'add-block' clicked, add block to world
     $("#add-block").click(function () {
         
@@ -13,7 +11,6 @@ $(function () {
             .addClass("block")                              //                                  define attributes
             .attr("id", blockId)
             .css({ top: "10px", left: "10px" })
-            
             .appendTo("#editor");                           //select element & append           select #editor and append new block to editor
 
         block.draggable({                                   //MAKE BLOCK DRAGGABLE          grab block that we just created and make it dragg-able
@@ -22,13 +19,10 @@ $(function () {
                 //you can add stuff here
             }
         });
-
         
         block.click(function (event) {
             event.stopPropogation();                        //                              propogation - stop propograption - if we click on block, nothing else happens
-        });
-
-        
+        }); 
         
         block.contextmenu(function (event) {                //RIGHT CLICK TO DELETE         contextMenu -> means right click                right click to delete block
             event.preventDefault();
@@ -74,7 +68,7 @@ $(function () {
         });
     };
 
-    function ClearEditor() {
+    function ClearEditor() {                //CLEAR EDITOR
         const $editor = $("#editor")
         $editor.children().remove();
     }
@@ -139,6 +133,31 @@ $(function () {
             }
         });
     };
+
+    //DELETE LEVEL
+    $("#delete-level").click(function () {
+        const levelId = $("#level-id").val().trim();
+        if (!levelId) {
+            alert("Please enter a level ID");
+            return;
+        }
+
+        $.ajax({                                            //AJAX - DELETE - SAVE LEVEL              RESPONSE = confirmation message 
+            url: `http://localhost:3000/level/` + encodeURIComponent(levelId),
+            method: "DELETE", //post call
+            contentType: "application/json",
+
+            success: function (response) {
+                loadLevelList(); // load the level list again once the level is saved
+                ClearEditor();
+                alert(response.message)
+            },
+            error: function (xhr, status, error) {
+                alert("error deleting level: ", + xhr.responseText);
+            }
+        });
+
+    });
     //SAVE LEVEL 
     $("#save-level").click(function () {
         const levelId = $("#level-id").val().trim();
