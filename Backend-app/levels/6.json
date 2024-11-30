@@ -1,24 +1,16 @@
 [
   {
     "id": "block-0",
-    "x": 0,
-    "y": 550,
+    "x": 170,
+    "y": 315,
     "width": 50,
     "height": 50,
     "type": "block"
   },
   {
     "id": "block-1",
-    "x": 750,
-    "y": 550,
-    "width": 50,
-    "height": 50,
-    "type": "block"
-  },
-  {
-    "id": "block-0",
-    "x": 750,
-    "y": 0,
+    "x": 82,
+    "y": 354,
     "width": 50,
     "height": 50,
     "type": "block"
