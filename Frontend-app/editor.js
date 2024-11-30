@@ -1,10 +1,9 @@
-//function to
+
 
 $(function () {
-    //block counter
     let blockCounter = 0;
    
-    //ADD BLOCK                                                                                 when element 'add-block' clicked, add block to world
+                                    //ADD BLOCK                                                 when element 'add-block' clicked, add block to world
     $("#add-block").click(function () {
         
         const blockId = `block-${blockCounter++}`;                                              //NOTE: this isn't single quotes, its the double tilda key, but not the tilda
@@ -40,6 +39,7 @@ $(function () {
         })
     });
 
+
     //LOAD LEVEL
     $("#load-level").click(function () {
         let levelSelected = $("#level-list").val();
@@ -47,28 +47,27 @@ $(function () {
             alert("Please select a level");
         }
         else {
-            loadLevelSelected(levelSelected);
+            ClearEditor();                                                                  //clear level so shapes from another level are wiped from editor
+            loadLevelSelected(levelSelected);                                               //pass in the level the user selected and call func to load level.
         }
-        
-      
     });
 
-    function loadLevelSelected(levelSelected) {
+    function loadLevelSelected(levelSelected) {             //AJAX - GET - LOAD LEVEL SELECTED
         $.ajax({
-            url: `http://localhost:3000/level/` + encodeURIComponent(levelSelected),
+            url: `http://localhost:3000/level/` + encodeURIComponent(levelSelected),            //  ???? why does the file path only work with "level" and not "levels"???
             method: "GET",
             contentType: "application/json",
             
             success: function (res) {
 
-                const parsedData = JSON.parse(res);
+                const parsedData = JSON.parse(res);             //parse response to JSON                ???? I thought cors automatically parsed to JSON. Why do I need this?
                 
-                for (let i = 0; i < parsedData.length; i++) {
-                    const Id = parsedData[i]["id"];
+                for (let i = 0; i < parsedData.length; i++) {   //call render shape func                iterate though each element in parsed data
+                    const Id = parsedData[i]["id"];//                                                   save ["tag"] value to variable 
                     const xPos = parsedData[i]["x"];
                     const yPos = parsedData[i]["y"];
                     const className = parsedData[i]["type"];
-                    RenderBlocks(Id, className, xPos, yPos, levelSelected);
+                    RenderShape(Id, className, xPos, yPos, levelSelected);//                            pass saved variables to RenderShape function
                 }
 
             }
@@ -80,10 +79,9 @@ $(function () {
         $editor.children().remove();
     }
 
-    function RenderBlocks(Id, className, xPos, yPos, levelSelected) {
-                                             //NOTE: this isn't single quotes, its the double tilda key, but not the tilda
-        //selector mode -> start with # or . and ID or element type. SEARCHES FOR that element$("#add-block") or <(".div")
-        //create mode -> beginning (<div) and end of element(/div>). Creates that element $("<div></div>")
+                                            //RENDER SHAPE
+    function RenderShape(Id, className, xPos, yPos, levelSelected) {                           
+        
         const block = $("<div></div>")                      //CREATE NEW BLOCK                 $("<div></div>") creates new div element                 
             .addClass("block")                              //                                  define attributes
             .attr("id", Id)
@@ -96,8 +94,8 @@ $(function () {
                 //you can add stuff here
             }
         });
-        const levelData = []; //this is array that holds data in each level. See 1.json or 2.json to see array
-        $(".block").each(function () { //Jquery method and not a an array, so not doing "foreach", doing "each"
+        const levelData = [];                               //this is array that holds data in each level. See 1.json or 2.json to see array
+        $(".block").each(function () {                      //Jquery method and not a an array, so not doing "foreach", doing "each"
             const $this = $(this);
             const position = $this.position();
             levelData.push({
@@ -109,10 +107,6 @@ $(function () {
                 type: "block"
             });
         });
-
-        
-
-
 
         block.contextmenu(function (event) {                //RIGHT CLICK TO DELETE         contextMenu -> means right click                right click to delete block
             event.preventDefault();
@@ -121,36 +115,31 @@ $(function () {
                 $(this).remove();
             }
         })
-        
-       
-
-
     }
     
 
 
-    //get all the levels, make random call to server and if we get numbers back then we know things are working
+    //LOAD DROP MENU OF LEVELS SAVED 
     function loadLevelList() {
         console.log("load level cal")
-        $.ajax({
-            url: "http://localhost:3000/levels",  //define end point
+        $.ajax({                                        //AJAX - GET - LOAD LEVEL SELECTED      RESPONSE = levelIds (name of file level saved as minus file extension)
+            url: "http://localhost:3000/levels",                                                //  ???? why is the file path "levels" work here and "level" other places???
             method: "GET",
-            success: function (levelIds) {
-                const $levelList = $("#level-list")       //$ at beginning of variable means it's a Jquery type variable. Grab "#level-list" hmtl element and store in Jquy var
-                $levelList.empty();        //clear the list
-                $levelList.append('<option value=""> Select a Level</option>');
+            success: function (levelIds) {                                                       //Grab "#level-list" hmtl element and store in Jquy var
+                const $levelList = $("#level-list")                                             //$ at beginning of variable means it's a Jquery type variable. 
+                $levelList.empty();                                                             //clear the list
+                $levelList.append('<option value=""> Select a Level</option>');                 //append default text now that it was cleared in previous step
 
-                levelIds.forEach(function (id) {
-                    $levelList.append(`<option value="${id}">${id}</option>`)
-                });
-            },
-            //handle error
+                levelIds.forEach(function (id) {                                                //iterator through each levelID (levelId.json in levels folder)
+                    $levelList.append(`<option value="${id}">${id}</option>`)                       //??? Raf, where is this ${id} info coming from? How is it getting the info
+                });                                                                                 //from $levelList. I get function (id) is passing id as an arguement, but 
+            },                                                                                      //where is the data being assigned to "id"??????????
             error: function(xhr, status, error) {
                 console.error("error fetching level list", error);
             }
         });
     };
-    //SAVE LEVEL //get save level ID. When clicked, make call back function
+    //SAVE LEVEL 
     $("#save-level").click(function () {
         const levelId = $("#level-id").val().trim();
 
@@ -159,9 +148,9 @@ $(function () {
             return;
         }
 
-        const levelData = []; //this is array that holds data in each level. See 1.json or 2.json to see array
+        const levelData = [];                                                               //this is array that holds data in each level. See 1.json or 2.json to see array
 
-        $(".block").each(function () { //Jquery method and not a an array, so not doing "foreach", doing "each"
+        $(".block").each(function () {                                                      //Jquery method and not a an array, so not doing "foreach", doing "each"
             const $this = $(this);
             const position = $this.position();
             levelData.push({
@@ -173,14 +162,13 @@ $(function () {
                 type: "block"
             });
         });
-        //check if level is empty
-        if (levelData.length == 0) {
+        
+        if (levelData.length == 0) {                                                        //check if level is empty
             alert("the level is empty. Add some blcoks before saving")
             return;
         };
 
-        //after we have all the stuff, make post requet
-        $.ajax({
+        $.ajax({                                            //AJAX - POST - SAVE LEVEL              RESPONSE = confirmation message 
             url: `http://localhost:3000/level/` + encodeURIComponent(levelId),
             method: "POST", //post call
             contentType: "application/json",

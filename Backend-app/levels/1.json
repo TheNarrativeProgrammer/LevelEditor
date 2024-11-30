@@ -1,16 +1,64 @@
 [
   {
     "id": "block-0",
-    "x": 19,
-    "y": 139,
+    "x": 750,
+    "y": 550,
     "width": 50,
     "height": 50,
     "type": "block"
   },
   {
-    "id": "block-1",
-    "x": 52,
-    "y": 184,
+    "id": "block-8",
+    "x": 141,
+    "y": 550,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-9",
+    "x": 362,
+    "y": 407,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-10",
+    "x": 361,
+    "y": 456,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-11",
+    "x": 361,
+    "y": 502,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-12",
+    "x": 361,
+    "y": 550,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-13",
+    "x": 701,
+    "y": 550,
+    "width": 50,
+    "height": 50,
+    "type": "block"
+  },
+  {
+    "id": "block-14",
+    "x": 139,
+    "y": 506,
     "width": 50,
     "height": 50,
     "type": "block"
