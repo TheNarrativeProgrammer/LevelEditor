@@ -21,7 +21,8 @@ $(function () {
         });
         
         block.click(function (event) {
-            //event.stopPropogation();                        //                              propogation - stop propograption - if we click on block, nothing else happens
+            //
+            event.stopPropogation();                        //                              propogation - stop propograption - if we click on block, nothing else happens
         }); 
         
         block.contextmenu(function (event) {                //RIGHT CLICK TO DELETE         contextMenu -> means right click                right click to delete block
@@ -38,7 +39,7 @@ $(function () {
     $("#load-level").click(function () {
         let levelSelected = $("#level-list").val();
         if (levelSelected === "") {
-            alert("Please select a level");
+            alert("Please select a level"); 
         }
         else {
             ClearEditor();                                                                  //clear level so shapes from another level are wiped from editor
