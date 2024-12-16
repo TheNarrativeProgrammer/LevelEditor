@@ -8,14 +8,31 @@
 </head>
 
 <body>
+    <header>
+        <h1>Not angry brids</h1>
+    </header>
+    <button id="btn-PlayEdit">Play game or open level editor?</button>
+
+    <div id="custom-alert" class="modal">
+        <div class="modal-content">
+            <p>are you sure</p>
+            <button id="btn-play">Play</button>
+            <button id="btn-editor">Editor</button>
+        </div>
+    </div>
+
     <h1>Level Editor</h1>
 
     <div id="toolbox">
         <button id="add-block">Add Block</button>
-        <!--TODO: Add more tools-->
+        <button id="add-bird">Add Bird</button>
+        <button id="add-pig">Add Pig</button>
     </div>
 
+    <canvas id="canvas"></canvas>
+
     <div id="editor"></div>
+    
 
     <button id="save-level">Save Level</button>
     <button id="delete-level" style="color: red">Delete Level</button>
@@ -26,10 +43,16 @@
         <option value="">Select a level</option>
     </select>
 
+    <footer>
+        <p>All right reseved</p>
+    </footer>
+    
+
     <!--JQuery-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script><!--Jquery ui-->
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/smoothness/jquery-ui.css"<!--Jquery style sheet-->
+    <script src = "https://unpkg.com/planck-js@latest/dist/planck.min.js"></script>
     <!--Front end Javascript for front end interactive-->
     <script src="editor.js"></script>
 </body>
